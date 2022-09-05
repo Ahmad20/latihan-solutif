@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i <= 50; $i++){
             DB::table('mahasiswa')->insert([
                 'nim' => $faker->nik(),
-                'nama' => $faker->name(),
+                'name' => $faker->name(),
                 'jurusan' => $faker->word(),
+                // 'password' => \bcrypt($faker->word()),
                 'created_at' => date("Y-m-d h:i:s"),
                 'updated_at' => date("Y-m-d h:i:s"),
             ]);
@@ -33,7 +34,6 @@ class DatabaseSeeder extends Seeder
                 'created_at' => date("Y-m-d h:i:s"),
                 'updated_at' => date("Y-m-d h:i:s"),
             ]);
-        }
-        
+        }  
     }
 }

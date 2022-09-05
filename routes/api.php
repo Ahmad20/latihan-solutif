@@ -20,9 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('mahasiswa/{id}', [MahasiswaController::class, 'show']);
-Route::get('mata-kuliah/{id}', [MataKuliahController::class, 'show']);
-Route::get('assign', [MahasiswaController::class, 'setMataKuliah']);
+// Route::get('mahasiswa/{id}', [MahasiswaController::class, 'show']);
+// Route::get('mata-kuliah/{id}', [MataKuliahController::class, 'show']);
+// Route::get('assign', [MahasiswaController::class, 'setMataKuliah']);
 
-Route::post('create-mahasiswa', [MahasiswaController::class, 'store']);
-Route::post('create-mata-kuliah', [MataKuliahController::class, 'store']);
+// Route::post('create-mahasiswa', [MahasiswaController::class, 'store']);
+// Route::post('create-mata-kuliah', [MataKuliahController::class, 'store']);

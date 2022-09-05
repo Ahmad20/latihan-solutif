@@ -27,7 +27,7 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.mhs.create');
     }
 
     /**
@@ -42,14 +42,16 @@ class MahasiswaController extends Controller
         try {
             $mhs = Mahasiswa::create($request->all());
             DB::commit();
-            return Response::json(['message' => 'success',
-                                    'status'=>200], 200);
+            return redirect()->route('admin.dashboard')->with(['success'=>'Mahasiswa berhasil ditambahkan']);
+            // return Response::json(['message' => 'success',
+            //                         'status'=>200], 200);
         }catch (Exception $ex){
             DB::rollback();
-            return Response::json(['message'=>$ex->errorInfo[2],
-                                'status'=>400], 400);
+            return redirect()->route('admin.dashboard')->with(['error'=>'Mahasiswa gagal ditambahkan']);
+            // return Response::json(['message'=>$ex->errorInfo[2],
+            //                     'status'=>400], 400);
         }
-        return Response::json(['message' => 'Unimplemented', 'status'=>404], 404);
+        return redirect()->route('admin.dashboard')->with(['error'=>'Mahasiswa gagal ditambahkan']);
     }
 
     /**
@@ -96,7 +98,9 @@ class MahasiswaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mhs = Mahasiswa::findOrFail($id);
+        
+        return view('admin.mhs.edit', ['data' => $mhs]);
     }
 
     /**
@@ -108,7 +112,14 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token']);
+
+        $mhs = Mahasiswa::findOrFail($id);
+
+        $mhs->update($data);
+
+        return redirect()->route('admin.dashboard')->with(['success'=> 'Data Mahasiswa Berhasil di Update']);
+
     }
 
     /**
@@ -119,6 +130,8 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Mahasiswa::findOrFail($id)->delete();
+        
+        return redirect()->route('admin.dashboard')->with('success', 'Mahasiswa dihapus');
     }
 }
