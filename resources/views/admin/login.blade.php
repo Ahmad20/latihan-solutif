@@ -43,7 +43,7 @@
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                <img src="/images/solutif.png"  alt="Solutif">
+                                <img src="/images/solutif.png" alt="Solutif">
                             </a>
                         </div>
                         @if ($errors->has('login'))
@@ -80,12 +80,6 @@
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign
                                     in</button>
                             </form>
-                            <div class="register-link">
-                                <p>
-                                    Don't you have account?
-                                    <a href="{{ route('admin.registerView') }}">Sign Up Here</a>
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>

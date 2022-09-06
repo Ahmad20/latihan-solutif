@@ -29,7 +29,7 @@
 
     <!-- Main CSS-->
     <link href="/css/theme.css" rel="stylesheet" media="all">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 </head>
 
 <body class="animsition">
@@ -66,6 +66,14 @@
                                         <button class="au-btn au-btn-icon au-btn--green au-btn--small"
                                             onclick="location.href='/admin/add/mahasiswa'">
                                             <i class="zmdi zmdi-plus"></i>add item</button>
+                                        {{-- <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                                            <select class="js-select2" name="type">
+                                                <option selected="selected">Export</option>
+                                                <option value="">Option 1</option>
+                                                <option value="">Option 2</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="table-responsive table-responsive-data2">
@@ -73,23 +81,39 @@
                                         <thead>
                                             <tr>
                                                 <th>no</th>
+                                                <th>nim</th>
                                                 <th>nama</th>
-                                                <th>sks</th>
+                                                <th>jurusan</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data as $key => $mk)
+                                            @foreach ($data as $key => $mhs)
                                                 <tr class="tr-shadow">
                                                     <td>{{ ($data->currentPage() - 1) * 20 + $key + 1 }}</td>
-                                                    <td>{{ $mk->name }}</td>
-                                                    <td>{{ $mk->sks }}</td>
+                                                    <td>{{ $mhs->nim }}</td>
+                                                    <td>{{ $mhs->name }}</td>
+                                                    <td>{{ $mhs->jurusan }}</td>
                                                     <td>
                                                         <div class="table-data-feature">
-                                                            <button class="item add" data-toggle="tooltip"
-                                                                data-placement="top" title="Tambah"
-                                                                value="{{ $mk->id }}">
-                                                                <i class="zmdi zmdi-plus-circle"></i>
+                                                            <button
+                                                                onclick="location.href='/admin/edit/mahasiswa/{{ $mhs->id }}'"
+                                                                class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Ubah">
+                                                                <i class="zmdi zmdi-edit"></i>
+                                                            </button>
+                                                            <button
+                                                                onclick="location.href='/admin/delete/mahasiswa/{{ $mhs->id }}'"
+                                                                class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Hapus">
+                                                                <i class="zmdi zmdi-delete"></i>
+                                                            </button>
+                                                            <button
+                                                                onclick="location.href='/admin/print/mahasiswa/{{ $mhs->id }}'"
+                                                                formtarget="_blank" class="item"
+                                                                data-toggle="tooltip" data-placement="top"
+                                                                title="Cetak">
+                                                                <i class="zmdi zmdi-print"></i>
                                                             </button>
                                                         </div>
                                                     </td>
@@ -106,7 +130,6 @@
                                     <div class='d-flex justify-content-center'>
                                         {{ $data->links('pagination::bootstrap-4') }}
                                     </div>
-                                    <p id="results"></p>
                                 </div>
                                 <!-- END DATA TABLE -->
                             </div>
@@ -144,48 +167,6 @@
                 $(this).remove();
             });
         }, 1000);
-    </script>
-
-    {{-- <script>
-        var items = [];
-        var toggle = false;
-        $(".table-data-feature button.add").on("click", function() {
-            toggle = !toggle;
-            if (toggle === true) {
-                items.push(this.value);
-                $(this).find($("i")).toggleClass('zmdi zmdi-plus-circle zmdi zmdi-minus-circle');
-                // $(this).toggleClass('item add item minus');
-            }else{
-                items.splice(items.indexOf(this.value), 1);
-                $(this).find($("i")).toggleClass('zmdi zmdi-minus-circle zmdi zmdi-plus-circle');
-            }
-
-            console.log(items);
-            // $("#results").text(items);
-        });
-    </script> --}}
-    <script>
-        var items = [];
-        $(".table-data-feature button.add").on("click", function() {
-            items.push(this.value);
-            $(this).find($("i")).toggleClass('zmdi zmdi-plus-circle zmdi zmdi-minus-circle');
-            $(this).toggleClass('item add item minus').attr('title', 'Batal');
-
-            console.log(items);
-            // $("#results").text(items);
-        });
-        
-    </script>
-    <script>
-        $(".table-data-feature button.minus").on("click", function() {
-            console.log(this.value);
-            items.splice(items.indexOf(this.value), 1);
-            $(this).find($("i")).toggleClass('zmdi zmdi-minus-circle zmdi zmdi-plus-circle');
-            $(this).toggleClass('item minus item add');
-
-            console.log(items);
-            // $("#results").text(items);
-        });
     </script>
 </body>
 

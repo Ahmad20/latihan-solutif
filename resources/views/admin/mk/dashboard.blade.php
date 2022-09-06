@@ -29,7 +29,6 @@
 
     <!-- Main CSS-->
     <link href="/css/theme.css" rel="stylesheet" media="all">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -64,7 +63,7 @@
                                 <div class="table-data__tool">
                                     <div class="table-data__tool-right">
                                         <button class="au-btn au-btn-icon au-btn--green au-btn--small"
-                                            onclick="location.href='/admin/add/mahasiswa'">
+                                            onclick="location.href='/admin/add/mata-kuliah'">
                                             <i class="zmdi zmdi-plus"></i>add item</button>
                                     </div>
                                 </div>
@@ -86,10 +85,17 @@
                                                     <td>{{ $mk->sks }}</td>
                                                     <td>
                                                         <div class="table-data-feature">
-                                                            <button class="item add" data-toggle="tooltip"
-                                                                data-placement="top" title="Tambah"
-                                                                value="{{ $mk->id }}">
-                                                                <i class="zmdi zmdi-plus-circle"></i>
+                                                            <button
+                                                                onclick="location.href='/admin/edit/mata-kuliah/{{ $mk->id }}'"
+                                                                class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Ubah">
+                                                                <i class="zmdi zmdi-edit"></i>
+                                                            </button>
+                                                            <button
+                                                                onclick="location.href='/admin/delete/mata-kuliah/{{ $mk->id }}'"
+                                                                class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Hapus">
+                                                                <i class="zmdi zmdi-delete"></i>
                                                             </button>
                                                         </div>
                                                     </td>
@@ -144,48 +150,6 @@
                 $(this).remove();
             });
         }, 1000);
-    </script>
-
-    {{-- <script>
-        var items = [];
-        var toggle = false;
-        $(".table-data-feature button.add").on("click", function() {
-            toggle = !toggle;
-            if (toggle === true) {
-                items.push(this.value);
-                $(this).find($("i")).toggleClass('zmdi zmdi-plus-circle zmdi zmdi-minus-circle');
-                // $(this).toggleClass('item add item minus');
-            }else{
-                items.splice(items.indexOf(this.value), 1);
-                $(this).find($("i")).toggleClass('zmdi zmdi-minus-circle zmdi zmdi-plus-circle');
-            }
-
-            console.log(items);
-            // $("#results").text(items);
-        });
-    </script> --}}
-    <script>
-        var items = [];
-        $(".table-data-feature button.add").on("click", function() {
-            items.push(this.value);
-            $(this).find($("i")).toggleClass('zmdi zmdi-plus-circle zmdi zmdi-minus-circle');
-            $(this).toggleClass('item add item minus').attr('title', 'Batal');
-
-            console.log(items);
-            // $("#results").text(items);
-        });
-        
-    </script>
-    <script>
-        $(".table-data-feature button.minus").on("click", function() {
-            console.log(this.value);
-            items.splice(items.indexOf(this.value), 1);
-            $(this).find($("i")).toggleClass('zmdi zmdi-minus-circle zmdi zmdi-plus-circle');
-            $(this).toggleClass('item minus item add');
-
-            console.log(items);
-            // $("#results").text(items);
-        });
     </script>
 </body>
 

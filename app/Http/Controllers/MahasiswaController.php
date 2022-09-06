@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Mahasiswa;
+use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -15,9 +16,10 @@ class MahasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function dashboard()
     {
-        //
+        $mk = MataKuliah::paginate(20);
+        return view('mhs.dashboard', ['data' => $mk]);
     }
 
     /**
@@ -42,16 +44,16 @@ class MahasiswaController extends Controller
         try {
             $mhs = Mahasiswa::create($request->all());
             DB::commit();
-            return redirect()->route('admin.dashboard')->with(['success'=>'Mahasiswa berhasil ditambahkan']);
+            return redirect()->route('admin.dashboardMhs')->with(['success'=>'Mahasiswa berhasil ditambahkan']);
             // return Response::json(['message' => 'success',
             //                         'status'=>200], 200);
         }catch (Exception $ex){
             DB::rollback();
-            return redirect()->route('admin.dashboard')->with(['error'=>'Mahasiswa gagal ditambahkan']);
+            return redirect()->route('admin.dashboardMhs')->with(['error'=>'Mahasiswa gagal ditambahkan']);
             // return Response::json(['message'=>$ex->errorInfo[2],
             //                     'status'=>400], 400);
         }
-        return redirect()->route('admin.dashboard')->with(['error'=>'Mahasiswa gagal ditambahkan']);
+        return redirect()->route('admin.dashboardMhs')->with(['error'=>'Mahasiswa gagal ditambahkan']);
     }
 
     /**
@@ -118,7 +120,7 @@ class MahasiswaController extends Controller
 
         $mhs->update($data);
 
-        return redirect()->route('admin.dashboard')->with(['success'=> 'Data Mahasiswa Berhasil di Update']);
+        return redirect()->route('admin.dashboardMhs')->with(['success'=> 'Data Mahasiswa Berhasil di Update']);
 
     }
 
@@ -132,6 +134,6 @@ class MahasiswaController extends Controller
     {
         Mahasiswa::findOrFail($id)->delete();
         
-        return redirect()->route('admin.dashboard')->with('success', 'Mahasiswa dihapus');
+        return redirect()->route('admin.dashboardMhs')->with('success', 'Mahasiswa dihapus');
     }
 }

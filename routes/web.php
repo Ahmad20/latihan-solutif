@@ -22,26 +22,34 @@ Route::get('/', function () {
 
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::middleware(['guest:admin'])->group(function(){
-        Route::get('/register', [AdminController::class, 'registerView'])->name('registerView');
-        Route::post('/register', [AdminController::class, 'register'])->name('register');   
+        // Route::get('/register', [AdminController::class, 'registerView'])->name('registerView');
+        // Route::post('/register', [AdminController::class, 'register'])->name('register');   
 
         Route::get('/login', [AdminController::class, 'loginView'])->name('loginView');
         Route::post('/login', [AdminController::class, 'login'])->name('login');
     });
 
     Route::middleware(['auth:admin'])->group(function(){
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [AdminController::class, 'dashboardMahasiswa'])->name('dashboardMhs');
+        Route::get('/mata-kuliah', [AdminController::class, 'dashboardMataKuliah'])->name('dashboardMk');
         Route::get('/logout', [AdminController::class, 'logout']);
+        Route::get('/print/mahasiswa/{id}', [AdminController::class, 'printPDF']);
 
+        //Mahasiswa
         Route::post('/add/mahasiswa', [MahasiswaController::class, 'store'])->name('storeMhs');
         Route::get('/add/mahasiswa', [MahasiswaController::class, 'create'])->name('createMhs');
-        
         Route::post('/edit/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('updateMhs');
         Route::get('/edit/mahasiswa/{id}', [MahasiswaController::class, 'edit'])->name('editMhs');
-
         Route::get('/delete/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('deleteMhs');
+        
+        //Mata Kuliah
+        Route::post('/add/mata-kuliah', [MataKuliahController::class, 'store'])->name('storeMk');
+        Route::get('/add/mata-kuliah', [MataKuliahController::class, 'create'])->name('createMk');
+        Route::post('/edit/mata-kuliah/{id}', [MataKuliahController::class, 'update'])->name('updateMk');
+        Route::get('/edit/mata-kuliah/{id}', [MataKuliahController::class, 'edit'])->name('editMk');
+        Route::get('/delete/mata-kuliah/{id}', [MataKuliahController::class, 'destroy'])->name('deleteMk');
 
-        Route::get('/print/mahasiswa/{id}', [AdminController::class, 'printPDF']);
+        
     });
 });
 
@@ -55,11 +63,11 @@ Route::prefix('mhs')->name('mhs.')->group(function(){
     });
 
     Route::middleware(['auth:mhs'])->group(function(){
-        Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
+        // Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
         Route::get('/logout', [MahasiswaController::class, 'logout']);
     });
 });
-// Route::post('/edit/mahasiswa/{id}', [MahasiswaController::class, 'edit'])->name('editMhs');
+Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
 Route::get('mahasiswa/{id}', [MahasiswaController::class, 'show']);
 Route::get('mata-kuliah/{id}', [MataKuliahController::class, 'show']);
 Route::get('assign', [MahasiswaController::class, 'setMataKuliah']);

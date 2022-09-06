@@ -27,7 +27,7 @@ class MataKuliahController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.mk.create');
     }
 
     /**
@@ -42,14 +42,16 @@ class MataKuliahController extends Controller
         try {
             $matkul = MataKuliah::create($request->all());
             DB::commit();
-            return Response::json(['message' => 'success',
-                                    'status'=>200], 200);
+            return redirect()->route('admin.dashboardMk')->with(['success'=>'Mata Kuliah berhasil ditambahkan']);
+            // return Response::json(['message' => 'success',
+            //                         'status'=>200], 200);
         }catch (Exception $ex){
             DB::rollback();
-            return Response::json(['message'=>$ex->errorInfo[2],
-                                'status'=>400], 400);
+            return redirect()->route('admin.dashboardMk')->with(['error'=>'Mata Kuliah gagal ditambahkan']);
+            // return Response::json(['message'=>$ex->errorInfo[2],
+            //                     'status'=>400], 400);
         }
-        return Response::json(['message' => 'Unimplemented', 'status'=>404], 404);
+        return redirect()->route('admin.dashboardMk')->with(['error'=>'Mata Kuliah gagal ditambahkan']);
         
     }
 
@@ -82,7 +84,9 @@ class MataKuliahController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mk = MataKuliah::findOrFail($id);
+        
+        return view('admin.mk.edit', ['data' => $mk]);
     }
 
     /**
@@ -94,7 +98,13 @@ class MataKuliahController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token']);
+
+        $mk = MataKuliah::findOrFail($id);
+
+        $mk->update($data);
+
+        return redirect()->route('admin.dashboardMk')->with(['success'=> 'Data Mata Kuliah Berhasil di Update']);
     }
 
     /**
@@ -105,6 +115,8 @@ class MataKuliahController extends Controller
      */
     public function destroy($id)
     {
-        //
+        MataKuliah::findOrFail($id)->delete();
+        
+        return redirect()->route('admin.dashboardMk')->with('success', 'Mata Kuliah dihapus');
     }
 }

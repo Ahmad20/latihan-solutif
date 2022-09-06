@@ -56,24 +56,20 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
-                                    <div class="card-header text-center title-2">Edit Mahasiswa</div>
+                                    <div class="card-header text-center title-2">Edit Mata Kuliah</div>
                                     <div class="card-body">
-                                        <form action="{{ route('admin.updateMhs', ['id' => $data->id]) }}" method="post" novalidate="novalidate">
+                                        <form action="{{ route('admin.updateMk', ['id' => $data->id]) }}" method="post"
+                                            novalidate="novalidate">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="name" class="control-label mb-1">Nama</label>
-                                                <input name="name" type="text"
-                                                    class="form-control" value="{{ $data->name }}">
+                                                <input name="name" type="text" class="form-control"
+                                                    value="{{ $data->name }}">
                                             </div>
                                             <div class="form-group">
-                                                <label for="nim" class="control-label mb-1">NIM</label>
-                                                <input name="nim" type="text"
-                                                    class="form-control" value="{{ $data->nim }}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="jurusan" class="control-label mb-1">Jurusan</label>
-                                                <input name="jurusan" type="text"
-                                                    class="form-control" value="{{ $data->jurusan }}">
+                                                <label for="sks" class="control-label mb-1">SKS</label>
+                                                <input name="sks" type="number" max=5 class="form-control"
+                                                    value="{{ $data->sks }}">
                                             </div>
                                             <div>
                                                 <button id="payment-button" type="submit"

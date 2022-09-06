@@ -3,41 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
-use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Mahasiswa;
+use App\Models\MataKuliah;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function registerView(){
-        return view('admin.register');
-    }
+    // public function registerView(){
+    //     return view('admin.register');
+    // }
 
-    public function register(Request $request){
-        $data = $request->except(['_token']);
+    // public function register(Request $request){
+    //     $data = $request->except(['_token']);
 
-        $validated = $request->validate([
-            'username' => 'required|unique:admins',
-            'password' => 'required',
-        ]);
+    //     $validated = $request->validate([
+    //         'username' => 'required|unique:admins',
+    //         'password' => 'required',
+    //     ]);
 
-        $validated['password'] = bcrypt($validated['password']);
+    //     $validated['password'] = bcrypt($validated['password']);
 
-        $admin = Admin::create($validated);
+    //     $admin = Admin::create($validated);
 
-        Auth::guard('admin')->login($admin);
+    //     Auth::guard('admin')->login($admin);
 
-        return redirect()->route('admin.dashboard');
-    }
+    //     return redirect()->route('admin.dashboard');
+    // }
 
     public function loginView(){
         return view('admin.login');
     }
     public function login(Request $request){
-        // $email = $request->email;
-        // $password = $request->password;
-        // $admin = $request->except(['_token']);
 
         $validated = $request->validate([
             'username' => 'required',
@@ -45,7 +43,7 @@ class AdminController extends Controller
         ]);
 
         if(Auth::guard('admin')->attempt($validated)){
-             return redirect()->route('admin.dashboard');
+             return redirect()->route('admin.dashboardMhs');
         }
         else {
             return redirect()->route('admin.login')->withErrors(['login'=>"Login Failed"]);
@@ -62,9 +60,14 @@ class AdminController extends Controller
         return redirect('/admin/login');
     }
 
-    public function dashboard(){
+    public function dashboardMahasiswa(){
         $mhs = Mahasiswa::paginate(20);
-        return view('admin.dashboard', ['data' => $mhs]);
+        return view('admin.mhs.dashboard', ['data' => $mhs]);
+    }
+
+    public function dashboardMataKuliah(){
+        $mk = MataKuliah::paginate(20);
+        return view('admin.mk.dashboard', ['data' => $mk]);
     }
 
     public function printPDF($id){

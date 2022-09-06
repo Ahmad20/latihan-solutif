@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => date("Y-m-d h:i:s"),
             ]);
             DB::table('mata_kuliah')->insert([
-                'nama' => $faker->word(),
+                'name' => $faker->word(),
                 'sks' => $faker->numberBetween(1, 4),
                 'created_at' => date("Y-m-d h:i:s"),
                 'updated_at' => date("Y-m-d h:i:s"),
